@@ -1,1 +1,4 @@
 /log/*
+/testingarea/*
+/.vscode/*
+/.history/*
