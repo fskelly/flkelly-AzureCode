@@ -2,3 +2,5 @@
 /testingarea/*
 /.vscode/*
 /.history/*
+.history
+.vscode
