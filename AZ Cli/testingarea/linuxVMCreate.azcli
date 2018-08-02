@@ -1,1 +1,2 @@
+#sample
 az vm create --resource-group vmbuilds --name samplevm --size Standard_A4 --admin-username flkelly --image UbuntuLTS --generate-ssh-keys
