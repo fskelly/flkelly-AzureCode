@@ -48,9 +48,26 @@ else
 
 $ports=8081,8080,1234
 $priority = 3891
+
+$direction = Read-Host "Inbound or Outbound"
+
+while("In","Out","P","I","O" -notcontains $direction)
+{
+	$direction = Read-Host "Inbound or Outbound"
+} 
+switch -Wildcard ($direction)
+{
+    "I*"{
+            $direction = "inbound"
+        }
+    "O*"{
+            $direction = "outbound"
+        }
+} 
+
 foreach ($port in $ports)
 {
-  $rulename="allowPort$port"
+  $rulename="allowPort$port$direction"
   
 
   # Get the NSG resource
@@ -58,9 +75,9 @@ foreach ($port in $ports)
   $nsg = Get-AzureRmNetworkSecurityGroup -Name $nsgname -ResourceGroupName $RGname 
 
   # Add the inbound security rule.
-  Write-Host "Adding inbound rule for port $port"
-  $nsg | Add-AzureRmNetworkSecurityRuleConfig -Name $rulename -Description "Allow port $port" -Access Allow `
-    -Protocol * -Direction Inbound -Priority $priority -SourceAddressPrefix "*" -SourcePortRange * `
+  Write-Host "Adding inbound rule for port $port - $direction"
+  $nsg | Add-AzureRmNetworkSecurityRuleConfig -Name $rulename -Description "Allow port $port - $direction" -Access Allow `
+    -Protocol * -Direction $direction -Priority $priority -SourceAddressPrefix "*" -SourcePortRange * `
     -DestinationAddressPrefix * -DestinationPortRange $port
 
   # Update the NSG.
