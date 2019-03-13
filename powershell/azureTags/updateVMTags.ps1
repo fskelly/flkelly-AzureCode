@@ -25,7 +25,6 @@ Function Connect-to-ARM
 Connect-to-ARM
 
 $ResourceGroup = "RG_Name"
-#$VMName = "tagdemo"
 
 #Get all tags from Resource (VM)
 $tags = (Get-AzResourceGroup -ResourceGroupName $ResourceGroup).tags
