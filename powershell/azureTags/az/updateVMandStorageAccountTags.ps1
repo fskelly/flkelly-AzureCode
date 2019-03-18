@@ -23,7 +23,9 @@
 }
 
 Connect-to-ARM
-$ResourceGroup = "zaflkelly"
+
+#provide Resource Group Name here
+$ResourceGroup = "RG_Name"
  
 #Get all tags from Resource (VM)
 $tags = (Get-AzResourceGroup -ResourceGroupName $ResourceGroup).tags
