@@ -1,0 +1,22 @@
+REGION=""
+RG_NAME=""
+AKS_CLUSTER=""
+CONTAINER_NAME=""
+
+IP=$(kubectl get service captureorder -o jsonpath="{.status.loadBalancer.ingress[*].ip}")
+az container create -g ${RG_NAME} -n ${CONTAINER_NAME} --image azch/loadtest --restart-policy Never -e SERVICE_IP=${IP}
+az container logs -g ${RG_NAME} -n ${CONTAINER_NAME}
+az container delete -g ${RG_NAME} -n ${CONTAINER_NAME}
+
+kubectl apply -f captureorder-hpa.yaml
+
+##!!Important For the Horizontal Pod Autoscaler to work, you MUST remove the explicit replicas: 2 count from your captureorder deployment and redeploy it and your pods must define resource requests and resource limits.
+kubectl get deployment
+kubectl delete deployment captureorder
+kubectl get pods
+kubectl apply -f captureorder-deployment.yaml
+az container create -g ${RG_NAME} -n ${CONTAINER_NAME} --image azch/loadtest --restart-policy Never -e SERVICE_IP=${IP}
+kubectl get pods -l
+az aks scale --resource-group ${RG_NAME} --name ${AKS_CLUSTER} --node-count 4
+az container delete -g ${RG_NAME} -n ${CONTAINER_NAME}
+

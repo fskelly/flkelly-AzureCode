@@ -1,0 +1,6 @@
+REGION=""
+RG_NAME=""
+AKS_CLUSTER=""
+
+az aks enable-addons --resource-group ${RG_NAME} --name ${AKS_CLUSTER} --addons monitoring
+kubectl apply -f logreader-rbac.yaml
