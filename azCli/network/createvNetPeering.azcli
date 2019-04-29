@@ -1,0 +1,20 @@
+SUB_ID="" #EXAMPLE XX-YYYY-ZZZ
+
+RG_NAME="" #EXAMPLE "RG1"
+
+REGION="" #EXAMPLE "southafricanorth"
+
+VNET1="" #EXAMPLE "first vnet to peer"
+VNET2="" #EXAMPLE "second vnet to peer"
+
+# Get the id for myVirtualNetwork1.
+vNet1Id=$(az network vnet show --resource-group ${RG_NAME} --name ${VNET1} --query id --out tsv)
+
+# Get the id for myVirtualNetwork2.
+vNet2Id=$(az network vnet show --resource-group ${RG_NAME} --name ${VNET2} --query id --out tsv)
+
+VNET1_CONNECT_NAME=$VNET1"-"$VNET2
+VNET2_CONNECT_NAME=$VNET2"-"$VNET1
+
+az network vnet peering create --name ${VNET1_CONNECT_NAME} --resource-group ${RG_NAME} --vnet-name ${VNET1} --remote-vnet-id $vNet2Id --allow-vnet-access --allow-gateway-transit
+az network vnet peering create --name ${VNET2_CONNECT_NAME} --resource-group ${RG_NAME} --vnet-name ${VNET2} --remote-vnet-id $vNet1Id --allow-vnet-access --use-remote-gateways

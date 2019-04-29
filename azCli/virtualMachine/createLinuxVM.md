@@ -25,5 +25,5 @@ SUBNET_PREFIX="" #EXAMPLE 172.16.1.0/24
 
 az account set --subscription ${SUB_ID}
 SUBNET_ID=$(az network vnet subnet show --resource-group ${VNET_RG_NAME} --name ${SUBNET_NAME} --vnet-name ${VNET_NAME} --query id -o tsv)
-az vm create --resource-group ${RG_NAME} --name ${VM_NAME} --admin-username ${VM_ADMIN_USER} --admin-password ${VM_ADMIN_PASSWORD} --image ${VM_IMAGE}  --storage-sku ${STORAGE_SKU} --subnet ${SUBNET_ID} --location ${REGION}
+az vm create --resource-group ${RG_NAME} --name ${VM_NAME} --admin-username ${VM_ADMIN_USER} --admin-password ${VM_ADMIN_PASSWORD} --image ${VM_IMAGE} --storage-sku ${STORAGE_SKU} --subnet ${SUBNET_ID} --location ${REGION}
 ```
