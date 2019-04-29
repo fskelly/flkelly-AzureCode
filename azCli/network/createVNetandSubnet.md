@@ -2,7 +2,7 @@
 
 Use below code within the [Azure Cloud Shell](https://shell.azure.com) or [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest) to create a Virtual Network (VNet), example values are provided next to parameters. The Subscription ID is your Subscription ID.
 
-```cli
+```bash
 SUB_ID="" #EXAMPLE XX-YYYY-ZZZ
 
 RG_NAME="" #EXAMPLE "RG1"
