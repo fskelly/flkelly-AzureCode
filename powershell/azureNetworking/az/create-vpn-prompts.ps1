@@ -45,11 +45,13 @@ $frontEndSubnet = ''
 #your on-premises ip range                                   
 $onPremRange = ''
  #a name for your gateway network 'azure-to-on-prem'                                    
-$localNetworkGatewayName = ''                          
+$localNetworkGatewayName = ''                     
+# a name for First subnet
+$frontEnd = '' 
 
 New-AzResourceGroup -Name $resourceGroup -Location $location
 $subnet1 = New-AzVirtualNetworkSubnetConfig -Name 'GatewaySubnet' -AddressPrefix $gatewaySubnet
-$subnet2 = New-AzVirtualNetworkSubnetConfig -Name 'Frontend' -AddressPrefix $frontEndSubnet
+$subnet2 = New-AzVirtualNetworkSubnetConfig -Name $frontEnd -AddressPrefix $frontEndSubnet
 New-AzVirtualNetwork -Name $vnet -ResourceGroupName $resourceGroup -Location $location -AddressPrefix $addressRange -Subnet $subnet1, $subnet2
 
 New-AzLocalNetworkGateway -Name $localNetworkGatewayName -ResourceGroupName $resourceGroup -Location $location -GatewayIpAddress $gatewayip -AddressPrefix $onPremRange
