@@ -37,8 +37,10 @@ $Conn = Get-AutomationConnection -Name AzureRunAsConnection
 Login-AzureRmAccount -ServicePrincipal -Tenant $Conn.TenantID -ApplicationId $Conn.ApplicationID -CertificateThumbprint $Conn.CertificateThumbprint
 $AzureContext = Select-AzureRmSubscription -SubscriptionId $Conn.SubscriptionID
 
-$VMLocalAdminUser = "LocalAdminUser"
-$VMLocalAdminSecurePassword = ConvertTo-SecureString "P@ssw0rd123-789!@JKJFDLKFKfdsaf" -AsPlainText -Force
+#please change below as needed
+$VMLocalAdminUser = ""
+#please change below as needed
+$VMLocalAdminSecurePassword = ConvertTo-SecureString "" -AsPlainText -Force
 $Credential = New-Object System.Management.Automation.PSCredential ($VMLocalAdminUser, $VMLocalAdminSecurePassword);
 $pubIP = "myPublicIpAddress" + $VMName        
 
