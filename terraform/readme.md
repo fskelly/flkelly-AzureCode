@@ -4,7 +4,7 @@
 
 This is my [terraform.io](https://www.terraform.io) repository. </br>
 My [SPN](/terraform/SPN) code (creating SPNs for use with Terrafomr)</br>
-My [runbook](terraform/runbooks) code (creating azure automation runbooks)</br>
+My [runbook](/terraform/runbooks) code (creating azure automation runbooks)</br>
 
 ## _**DISCLAIMER:**_
 
