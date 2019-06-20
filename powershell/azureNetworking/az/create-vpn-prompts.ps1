@@ -24,7 +24,7 @@ Function Connect-to-ARM
 
 Connect-to-ARM
 
- #where to setup resources like 'South Africa North'
+#where to setup resources like 'South Africa North'
 $location = ''
 #name for the resource group 'testvpn01'                                   
 $resourceGroup = ''
