@@ -6,8 +6,9 @@ if ($winVmCount -gt 0)
 {
   For ($i=0; $i -le ($winVmCount-1); $i++) 
   {
+      #change as needed, the next 2 lines
       $VMLocalAdminUser = "LocalAdminUser"
-      $VMLocalAdminSecurePassword = ConvertTo-SecureString 'TEstPassword1205jfkjgeYT3U' -AsPlainText -Force
+      $VMLocalAdminSecurePassword = ConvertTo-SecureString 'PASSWORD' -AsPlainText -Force
       $VMSize = "Standard_b1s"
       $vmsRG = $(jq -r '.NESpoke1VMs.resourceGroup' settings.json) 
       #$vmsRG = "flkelly-weu-vms"

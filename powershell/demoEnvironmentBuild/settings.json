@@ -5,8 +5,8 @@
 		"vpnResourceGroup":"flkelly-zan-net-test",
 		"vnetGWIP":"flkelly-zan-net-gw1",
 		"hubVnetName":"zan-hub-vnet",
-		"gatewayIP":"102.182.105.15",
-		"presharedKey":"unifiusg-connection-340924809t",
+		"gatewayIP":"1.1.1.1",
+		"presharedKey":"12345",
 		"gatewayName":"azure-zan-hub-to-on-prem"
 	},
 	"ZAHUB":
