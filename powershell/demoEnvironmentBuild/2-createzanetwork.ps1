@@ -44,6 +44,7 @@ $subnet = Get-AzVirtualNetworkSubnetConfig -Name 'GatewaySubnet' -VirtualNetwork
 $gwipconfig = New-AzVirtualNetworkGatewayIpConfig -Name gwipconfig1 -SubnetId $subnet.Id -PublicIpAddressId $gwpip.Id
 
 #building vnetgateway name
+#feel free to comment out the below to skip the VPN components
 Write-Output "Creating Virtual network gateway and connections"
 Write-Output "This might take a while, grab some coffee :)"
 $vnetGW = $hubVNetName + "-to-" + $onPremRange.Substring(0,$onPremRange.Length-3)
