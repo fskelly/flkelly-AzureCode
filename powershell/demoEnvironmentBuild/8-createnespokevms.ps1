@@ -21,7 +21,6 @@ if ($winVmCount -gt 0)
       $vnet = Get-AzVirtualNetwork -Name $vnetname -ResourceGroupName $vnetRG
       $subnet = Get-AzVirtualNetworkSubnetConfig -Name $subnetname -VirtualNetwork $vnet | Where-Object { $_.Name -ne "GatewaySubnet" }
       $vmnumber = $i+1
-      write-host $vmname
       $VMName = "$vmRegion-s-win$vmnumber"
       $NICName = $VMName + "-NIC"
       $NIC = New-AzNetworkInterface -Name $NICName -ResourceGroupName $vmsRG -Location $vmLocation -SubnetId $subnet.Id
@@ -60,7 +59,6 @@ if ($linuxVmCount -gt 0)
       $vnet = Get-AzVirtualNetwork -Name $vnetname -ResourceGroupName $vnetRG
       $subnet = Get-AzVirtualNetworkSubnetConfig -Name $subnetname -VirtualNetwork $vnet | Where-Object { $_.Name -ne "GatewaySubnet" }
       $vmnumber = $i+1
-      write-host $vmname
       $VMName = "$vmRegion-s-linux$vmnumber"
       $NICName = $VMName + "-NIC"
       $NIC = New-AzNetworkInterface -Name $NICName -ResourceGroupName $vmsRG -Location $vmLocation -SubnetId $subnet.Id
