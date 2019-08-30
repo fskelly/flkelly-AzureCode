@@ -6,13 +6,13 @@
             "value": "southafricanorth"
         },
         "virtualMachineName": {
-            "value": "zan-2016-1"
+            "value": "vm1"
         },
         "adminUsername": {
-            "value": "azure_groot"
+            "value": "admin"
         },
         "adminPassword": {
-            "value": "Gv3NJAxnW3!g0L?4%"
+            "value": "gsiu*&FFhjfa825hf"
         }
     }
 }

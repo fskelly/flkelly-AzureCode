@@ -3,76 +3,183 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "location": {
-            "type": "String",
-            "metadata": {
-                "description": "Location for vm"
-            }
+            "type": "string"
         },
         "virtualMachineName": {
-            "type": "String",
+            "type": "string",
             "metadata": {
-                "description": "Name for the VM"
+                "description": "Base name for VM and other components"
             }
         },
         "adminUsername": {
-            "type": "String",
+            "type": "string",
             "metadata": {
-                "description": "Admin username for the VM"
+                "description": "Name of Administrator user on the VM"
             }
         },
         "adminPassword": {
-            "type": "SecureString",
+            "type": "securestring",
             "metadata": {
-                "description": "Admin password for VM"
+                "description": "PWD of Administrator user on the VM"
             }
         },
-        "EnvironmentSize":{
+        "EnvironmentSize": {
             "type": "string",
-            "defaultValue":"medium",
+            "defaultValue": "medium",
             "allowedValues": [
                 "medium",
                 "large"
             ],
             "metadata": {
-                "description": "Medium for development, Large for other"
+                "description": "Medium for regular development. Large for Machine Learning development"
             }
         }
     },
     "variables": {
         "suffix": "[uniqueString(resourceGroup().id, resourceGroup().location)]",
+        "VMName": "[substring(toLower(concat(parameters('virtualMachineName'), variables('suffix'))),0,14)]",
         "resourceGroupName": "[toLower(resourceGroup().name)]",
-        "VMName": "[toLower(concat(parameters('virtualMachineName'), variables('suffix')))]",
-        "osDiskType": "StandardSSD_LRS",
         "TS-Size":{
-            "medium": {
+            "medium":{
                 "VMSize": "Standard_D2s_v3"
             },
-            "large": {
-                "VMSize": "Standard_D4s_v3"
+            "large":{
+                "VMSize": "Standard_D8s_v3"
             }
         },
-        "networkInterfaceName": "[toLower(concat(parameters('virtualMachineName'),'-nic-',variables('suffix')))]",
-        "networkSecurityGroupName": "[toLower(concat(parameters('virtualMachineName'),'-nsg-',variables('suffix')))]",
-        "subnetName": "default",
         "virtualNetworkName": "[concat(variables('resourceGroupName'), '-vnet')]",
-        "addressPrefixes": "172.16.0.0/24",
-        "publicIpAddressName": "[toLower(concat(parameters('virtualMachineName'),'-pip-',variables('suffix')))]",
+        "networkInterfaceName": "[toLower(concat(variables('VMName'),'-nic-', variables('suffix')))]",
+        "networkSecurityGroupName": "[toLower(concat(variables('VMName'),'-nsg-', variables('suffix')))]",
+        "diagnosticsStorageAccountName": "[substring(concat(variables('resourceGroupName'), 'diag', variables('suffix')), 0, 21)]",
+        "diagnosticsStorageAccountType": "Standard_LRS",
+        "diagnosticsStorageAccountKind": "Storage",
+        "addressPrefix": "10.0.0.0/24",
+        "subnetName": "default",
+        "subnetPrefix": "10.0.0.0/24",
+        "publicIpAddressName": "[toLower(concat(variables('VMName'),'-ip-', variables('suffix')))]",
         "publicIpAddressType": "Dynamic",
         "publicIpAddressSku": "Basic",
-        "nsgId": "[resourceId(resourceGroup().name, 'Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroupName'))]",
-        "vnetId": "[resourceId(resourceGroup().name,'Microsoft.Network/virtualNetworks', variables('virtualNetworkName'))]",
+        "autoShutdownStatus": "Enabled",
+        "autoShutdownTime": "18:00",
+        "autoShutdownTimeZone": "Eastern Standard Time",
+        "autoShutdownNotificationStatus": "Disabled",
+        "vnetId": "[resourceId('Microsoft.Network/virtualNetworks', variables('virtualNetworkName'))]",
         "subnetRef": "[concat(variables('vnetId'), '/subnets/', variables('subnetName'))]"
     },
     "resources": [
         {
-            "type": "Microsoft.Network/networkInterfaces",
-            "apiVersion": "2018-10-01",
-            "name": "[variables('networkInterfaceName')]",
+            "name": "[variables('VMName')]",
+            "type": "Microsoft.Compute/virtualMachines",
+            "apiVersion": "2017-03-30",
             "location": "[parameters('location')]",
             "dependsOn": [
-                "[concat('Microsoft.Network/networkSecurityGroups/', variables('networkSecurityGroupName'))]",
+                "[concat('Microsoft.Network/networkInterfaces/', variables('networkInterfaceName'))]",
+                "[concat('Microsoft.Storage/storageAccounts/', variables('diagnosticsStorageAccountName'))]"
+            ],
+            "properties": {
+                "osProfile": {
+                    "computerName": "[variables('VMName')]",
+                    "adminUsername": "[parameters('adminUsername')]",
+                    "adminPassword": "[parameters('adminPassword')]",
+                    "windowsConfiguration": {
+                        "provisionVmAgent": "true"
+                    }
+                },
+                "hardwareProfile": {
+                    "vmSize": "[variables('TS-Size')[parameters('EnvironmentSize')].VMSize]"
+                },
+                "storageProfile": {
+                    "imageReference": {
+                        "publisher": "MicrosoftVisualStudio",
+                        "offer": "VisualStudio",
+                        "sku": "VS-2017-Ent-Latest-Win10-N",
+                        "version": "latest"
+                    },
+                    "osDisk": {
+                        "createOption": "fromImage",
+                        "managedDisk": {
+                            "storageAccountType": "Premium_LRS"
+                        }
+                    },
+                    "dataDisks": []
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('networkInterfaceName'))]"
+                        }
+                    ]
+                },
+                "diagnosticsProfile": {
+                    "bootDiagnostics": {
+                        "enabled": true,
+                        "storageUri": "[reference(resourceId('Microsoft.Storage/storageAccounts', variables('diagnosticsStorageAccountName')), '2015-06-15').primaryEndpoints['blob']]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "[concat('shutdown-computevm-', variables('VMName'))]",
+            "type": "Microsoft.DevTestLab/schedules",
+            "apiVersion": "2017-04-26-preview",
+            "location": "[parameters('location')]",
+            "properties": {
+                "status": "[variables('autoShutdownStatus')]",
+                "taskType": "ComputeVmShutdownTask",
+                "dailyRecurrence": {
+                    "time": "[variables('autoShutdownTime')]"
+                },
+                "timeZoneId": "[variables('autoShutdownTimeZone')]",
+                "targetResourceId": "[resourceId('Microsoft.Compute/virtualMachines', variables('VMName'))]",
+                "notificationSettings": {
+                    "status": "[variables('autoShutdownNotificationStatus')]",
+                    "timeInMinutes": "30"
+                }
+            },
+            "dependsOn": [
+                "[concat('Microsoft.Compute/virtualMachines/', variables('VMName'))]"
+            ]
+        },
+        {
+            "name": "[variables('diagnosticsStorageAccountName')]",
+            "type": "Microsoft.Storage/storageAccounts",
+            "apiVersion": "2015-06-15",
+            "location": "[parameters('location')]",
+            "kind": "[variables('diagnosticsStorageAccountKind')]",
+            "properties": {
+                "accountType": "[variables('diagnosticsStorageAccountType')]"
+            }
+        },
+        {
+            "name": "[variables('virtualNetworkName')]",
+            "type": "Microsoft.Network/virtualNetworks",
+            "apiVersion": "2018-02-01",
+            "location": "[parameters('location')]",
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "[variables('addressPrefix')]"
+                    ]
+                },
+                "subnets": [
+                    {
+                        "name": "[variables('subnetName')]",
+                        "properties": {
+                            "addressPrefix": "[variables('subnetPrefix')]"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "name": "[variables('networkInterfaceName')]",
+            "type": "Microsoft.Network/networkInterfaces",
+            "apiVersion": "2016-09-01",
+            "location": "[parameters('location')]",
+            "dependsOn": [
                 "[concat('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]",
-                "[concat('Microsoft.Network/publicIpAddresses/', variables('publicIpAddressName'))]"
+                "[concat('Microsoft.Network/publicIpAddresses/', variables('publicIpAddressName'))]",
+                "[concat('Microsoft.Network/networkSecurityGroups/', variables('networkSecurityGroupName'))]"
             ],
             "properties": {
                 "ipConfigurations": [
@@ -84,94 +191,55 @@
                             },
                             "privateIPAllocationMethod": "Dynamic",
                             "publicIpAddress": {
-                                "id": "[resourceId(resourceGroup().name, 'Microsoft.Network/publicIpAddresses', variables('publicIpAddressName'))]"
+                                "id": "[resourceId('Microsoft.Network/publicIpAddresses', variables('publicIpAddressName'))]"
                             }
                         }
                     }
                 ],
                 "networkSecurityGroup": {
-                    "id": "[variables('nsgId')]"
+                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroupName'))]"
                 }
             }
         },
         {
-            "type": "Microsoft.Network/networkSecurityGroups",
-            "apiVersion": "2019-02-01",
-            "name": "[variables('networkSecurityGroupName')]",
-            "location": "[parameters('location')]"
-        },
-        {
-            "type": "Microsoft.Network/virtualNetworks",
-            "apiVersion": "2019-04-01",
-            "name": "[variables('virtualNetworkName')]",
-            "location": "[parameters('location')]",
-            "properties": {
-                "addressSpace": {
-                    "addressPrefixes": "[variables('addressPrefixes')]"
-                },
-                "subnets": "[variables('subnets')]"
-            }
-        },
-        {
-            "type": "Microsoft.Network/publicIpAddresses",
-            "apiVersion": "2019-02-01",
             "name": "[variables('publicIpAddressName')]",
+            "type": "Microsoft.Network/publicIpAddresses",
+            "apiVersion": "2017-08-01",
             "location": "[parameters('location')]",
-            "sku": {
-                "name": "[variables('publicIpAddressSku')]"
-            },
             "properties": {
                 "publicIpAllocationMethod": "[variables('publicIpAddressType')]"
+            },
+            "sku": {
+                "name": "[variables('publicIpAddressSku')]"
             }
         },
         {
-            "type": "Microsoft.Compute/virtualMachines",
-            "apiVersion": "2019-03-01",
-            "name": "[variables('TS-Size')[parameters('EnvironmentSize')].VMSize]",
+            "name": "[variables('networkSecurityGroupName')]",
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "apiVersion": "2017-06-01",
             "location": "[parameters('location')]",
-            "dependsOn": [
-                "[concat('Microsoft.Network/networkInterfaces/', variables('networkInterfaceName'))]"
-            ],
             "properties": {
-                "hardwareProfile": {
-                    "vmSize": "[variables('virtualMachineSize')]"
-                },
-                "storageProfile": {
-                    "osDisk": {
-                        "createOption": "fromImage",
-                        "managedDisk": {
-                            "storageAccountType": "[variables('osDiskType')]"
+                "securityRules": [
+                    {
+                        "name": "default-allow-rdp",
+                        "properties": {
+                            "priority": 1000,
+                            "protocol": "TCP",
+                            "access": "Allow",
+                            "direction": "Inbound",
+                            "sourceAddressPrefix": "*",
+                            "sourcePortRange": "*",
+                            "destinationAddressPrefix": "*",
+                            "destinationPortRange": "3389"
                         }
-                    },
-                    "imageReference": {
-                        "publisher": "MicrosoftWindowsServer",
-                        "offer": "WindowsServer",
-                        "sku": "2016-Datacenter",
-                        "version": "latest"
                     }
-                },
-                "networkProfile": {
-                    "networkInterfaces": [
-                        {
-                            "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('networkInterfaceName'))]"
-                        }
-                    ]
-                },
-                "osProfile": {
-                    "computerName": "[variables('VMName')]",
-                    "adminUsername": "[parameters('adminUsername')]",
-                    "adminPassword": "[parameters('adminPassword')]",
-                    "windowsConfiguration": {
-                        "enableAutomaticUpdates": true,
-                        "provisionVmAgent": true
-                    }
-                }
+                ]
             }
         }
     ],
     "outputs": {
         "adminUsername": {
-            "type": "String",
+            "type": "string",
             "value": "[parameters('adminUsername')]"
         }
     }
