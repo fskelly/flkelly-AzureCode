@@ -98,10 +98,7 @@
             "type": "Microsoft.Network/networkSecurityGroups",
             "apiVersion": "2019-02-01",
             "name": "[variables('networkSecurityGroupName')]",
-            "location": "[parameters('location')]",
-            "properties": {
-                "securityRules": "[variables('networkSecurityGroupRules')]"
-            }
+            "location": "[parameters('location')]"
         },
         {
             "type": "Microsoft.Network/virtualNetworks",
