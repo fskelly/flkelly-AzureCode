@@ -50,7 +50,7 @@
         "virtualNetworkName": "[concat(variables('resourceGroupName'), '-vnet')]",
         "networkInterfaceName": "[toLower(concat(variables('VMName'),'-nic-', variables('suffix')))]",
         "networkSecurityGroupName": "[toLower(concat(variables('VMName'),'-nsg-', variables('suffix')))]",
-        "diagnosticsStorageAccountName": "[substring(concat(variables('resourceGroupName'), 'diag', variables('suffix')), 0, 21)]",
+        "diagnosticsStorageAccountName": "[substring(concat(variables('VMName'), 'diag', variables('suffix')), 0, 21)]",
         "diagnosticsStorageAccountType": "Standard_LRS",
         "diagnosticsStorageAccountKind": "Storage",
         "addressPrefix": "172.16.0.0/16",
@@ -61,7 +61,7 @@
         "publicIpAddressSku": "Basic",
         "autoShutdownStatus": "Enabled",
         "autoShutdownTime": "18:00",
-        "autoShutdownTimeZone": "South African Standard Time",
+        "autoShutdownTimeZone": "South Africa Standard Time",
         "autoShutdownNotificationStatus": "Disabled",
         "vnetId": "[resourceId('Microsoft.Network/virtualNetworks', variables('virtualNetworkName'))]",
         "subnetRef": "[concat(variables('vnetId'), '/subnets/', variables('subnetName'))]"
