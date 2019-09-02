@@ -3,7 +3,7 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "location": {
-            "value": "southafricanorth"
+            "value": "westeurope"
         },
         "virtualMachineName": {
             "value": "vm1"
@@ -12,7 +12,7 @@
             "value": "azure_admin"
         },
         "adminPassword": {
-            "value": "gsiu*&FFhjfa825hf"
+            "value": "8437ijgosgUYWEGN@@#"
         }
     }
 }

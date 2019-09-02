@@ -53,15 +53,15 @@
         "diagnosticsStorageAccountName": "[substring(concat(variables('resourceGroupName'), 'diag', variables('suffix')), 0, 21)]",
         "diagnosticsStorageAccountType": "Standard_LRS",
         "diagnosticsStorageAccountKind": "Storage",
-        "addressPrefix": "10.0.0.0/24",
-        "subnetName": "default",
-        "subnetPrefix": "10.0.0.0/24",
+        "addressPrefix": "172.16.0.0/16",
+        "subnetName": "[concat(variables('resourceGroupName'), '-snet')]",
+        "subnetPrefix": "172.16.1.0/24",
         "publicIpAddressName": "[toLower(concat(variables('VMName'),'-ip-', variables('suffix')))]",
         "publicIpAddressType": "Dynamic",
         "publicIpAddressSku": "Basic",
         "autoShutdownStatus": "Enabled",
         "autoShutdownTime": "18:00",
-        "autoShutdownTimeZone": "Eastern Standard Time",
+        "autoShutdownTimeZone": "South African Standard Time",
         "autoShutdownNotificationStatus": "Disabled",
         "vnetId": "[resourceId('Microsoft.Network/virtualNetworks', variables('virtualNetworkName'))]",
         "subnetRef": "[concat(variables('vnetId'), '/subnets/', variables('subnetName'))]"
@@ -98,7 +98,7 @@
                     "osDisk": {
                         "createOption": "fromImage",
                         "managedDisk": {
-                            "storageAccountType": "Premium_LRS"
+                            "storageAccountType": "Standard_LRS"
                         }
                     },
                     "dataDisks": []
