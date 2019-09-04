@@ -1,4 +1,6 @@
 az login
+
+# update values below as needed
 SUB_ID=""
 REGION=""
 RG_NAME=""
@@ -22,4 +24,7 @@ az aks install-cli
 az aks get-credentials --resource-group ${RG_NAME} --name ${AKS_CLUSTER}
 kubectl get nodes
 kubectl create clusterrolebinding kubernetes-dashboard -n kube-system --clusterrole=cluster-admin --serviceaccount=kube-system:kubernetes-dashboard
+kubectl create serviceaccount --namespace kube-system tiller
+kubectl create clusterrolebinding tiller-cluster-rule --clusterrole=cluster-admin --serviceaccount=kube-system:tiller
+kubectl patch deploy --namespace kube-system tiller-deploy -p '{"spec":{"template":{"spec":{"serviceAccount":"tiller"}}}}'
 az aks browse --resource-group ${RG_NAME} --name ${AKS_CLUSTER}
