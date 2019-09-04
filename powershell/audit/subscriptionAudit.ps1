@@ -1,7 +1,7 @@
 $ErrorActionPreference = "silentlyContinue"
 
 # Connect to Azure and get all VMs in a resource group
-Connect-AzAccount
+##Connect-AzAccount
 # Select the Subscription to run the command against
 $sub = Select-AzSubscription -SubscriptionId "949ef534-07f5-4138-8b79-aae16a71310c"
 
@@ -181,7 +181,7 @@ Foreach ($NSG in $NSGs)
     Else
     {
         $SubnetName = $NSG.NetworkInterfaces.Id
-        $Parts = $NICName.Split("/")
+        $Parts = ($NSG.NetworkInterfaces.Id).split("/")
         $NICLabel = $Parts[8]
     }
 
@@ -196,7 +196,7 @@ Else
     {
         $SUBNETName = $NSG.Subnets.Id
         $Parts = $SUBNETName.Split("/")
-        $SUBNETLabel = $PArts[10]
+        $SUBNETLabel = $Parts[10]
     }
 
     $NSGTable.cell(($i+2),1).range.Bold = 0
@@ -251,7 +251,7 @@ ForEach ($NSG in $NSGs)
     $NSGRules = Get-AzNetworkSecurityRuleConfig -NetworkSecurityGroup $NSG
     $i = 0
 
-    ForEach ($NSGRULE in $NSGRULES) 
+    ForEach ($NSGRule in $NSGRules) 
     {
         $NSGRuleTable.cell(($i+2),1).range.Bold = 0
         $NSGRuleTable.cell(($i+2),1).range.text = $NSGRule.Name
@@ -280,13 +280,16 @@ ForEach ($NSG in $NSGs)
         $NSGRuleTable.cell(($i+2),9).range.Bold = 0
         $NSGRuleTable.cell(($i+2),9).range.text = $NSGRule.Direction
 
+        $NSGRule.Name
+        $NSGRule.DestinationPortRange
+
         $i++
     }
 
     ### Get all default Security Rules in the NSG
-    $NSGRules = Get-AzNetworkSecurityRuleConfig -NetworkSecurityGroup $NSG -DefaultRules
+<#     $NSGRules = Get-AzNetworkSecurityRuleConfig -NetworkSecurityGroup $NSG -DefaultRules
 
-    ForEach ($NSGRULE in $NSGRULES) 
+    ForEach ($NSGRule in $NSGRules) 
     {
             $NSGRuleTable.cell(($i+2),1).range.Bold = 0
             $NSGRuleTable.cell(($i+2),1).range.text = $NSGRule.Name
@@ -316,7 +319,12 @@ ForEach ($NSG in $NSGs)
             $NSGRuleTable.cell(($i+2),9).range.text = $NSGRule.Direction
 
             $i++
-    }
+            ##$NSGRule.Name
+            ##$NSGRule.DestinationPortRange
+            ##$NSGRule | GM
+            ##$NSGRule
+
+    } #>
 
     ### Close the NSG table
     $Word.Selection.Start= $Document.Content.End
@@ -328,7 +336,7 @@ ForEach ($NSG in $NSGs)
 $toc.Update()
 
 # Save the document
-$Report = 'C:\Temp\Azure_document.doc'
+$Report = 'C:\Temp\Azure_document_' +$sub.Subscription.name+ '.doc'
 $Document.SaveAs([ref]$Report,[ref]$SaveFormat::wdFormatDocument)
 $word.Quit()
 
