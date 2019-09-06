@@ -104,9 +104,9 @@ Foreach ($nic in $nics)
     $nicTable.cell(($i+2),5).range.Bold = 0
     $nicTable.cell(($i+2),5).range.text = $subnetName
     $nicTable.cell(($i+2),6).range.Bold = 0   
-    $nicTable.cell(($i+2),6).range.text = $nic.IPconfigurations.PrivateIpAddress
+    $nicTable.cell(($i+2),6).range.text = ($nic.IPconfigurations | Where-Object {$_.Primary -eq "True"}).PrivateIpAddress
     $nicTable.cell(($i+2),7).range.Bold = 0
-    $nicTable.cell(($i+2),7).range.text = $nic.IPconfigurations.PrivateIpAllocationMethod
+    $nicTable.cell(($i+2),7).range.text = ($nic.IPconfigurations | Where-Object {$_.Primary -eq "True"}).PrivateIpAllocationMethod
     $nicTable.cell(($i+2),8).range.Bold = 0   
     $nicTable.cell(($i+2),8).range.text = $publicIP
     $nicTable.cell(($i+2),9).range.Bold = 0   
