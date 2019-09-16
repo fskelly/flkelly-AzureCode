@@ -135,7 +135,7 @@ Foreach ($nic in $nics)
     "<tr><td>$vmLabel</td><td>$nicName</td><td>$nicResourceGroupName</td><td>$vnetName</td><td>$subnetName</td><td>$nicPriavteIP</td><td>$nicPrivateIPAllocationMethod</td><td>$publicIP</td><td>$publicIPAllocationMethod</td></tr>"
     $i++
     Write-host 'Completed Processing NIC '$nicProcessed' of ' $nicCount
-    $nicCount++
+    $nicProcessed++
 }
 
 ### Close Table
