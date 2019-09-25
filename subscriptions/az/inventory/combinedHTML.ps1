@@ -26,6 +26,9 @@ Set-AzContext -SubscriptionId $subscriptions[$subscriptionChoice].SubscriptionId
 #$sub = Select-AzSubscription -SubscriptionId "your_sub_id_here"
 
 # Creating the HTML Header, and add document
+# for cloud shell
+#$filename = $HOME + "/audit-sample-" + ($subscriptions[$subscriptionChoice].Name)+".html"
+
 $filename = "c:\temp\audit-sample-"+($subscriptions[$subscriptionChoice].Name)+".html"
 Add-Content -Path $filename -Value `
 ('<h1>Azure Documentation - '+($subscriptions[$subscriptionChoice].Name)+'</h1>')
