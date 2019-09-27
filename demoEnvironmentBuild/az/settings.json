@@ -1,0 +1,67 @@
+{	
+	"VPN":
+	{  
+		"vpnLocation":"southafricanorth",
+		"vpnResourceGroup":"flkelly-zan-net-test",
+		"vnetGWIP":"flkelly-zan-net-gw1",
+		"hubVnetName":"zan-hub-vnet",
+		"gatewayIP":"1.1.1.1",
+		"presharedKey":"12345",
+		"gatewayName":"azure-zan-hub-to-on-prem"
+	},
+	"ZAHUB":
+	{  
+		"addressRange":"192.168.100.0/26",
+		"gatewaySubnet":"192.168.100.32/27",
+		"frontendName":"zan-hub-frontend",
+		"frontendRange":"192.168.100.0/27",
+		"onPremRange":"192.168.1.0/24",
+		"resourceGroup": "flkelly-zan-net-test"
+	},
+	"ZASpoke1":
+	{
+		"Name": "zan-spoke-frontend",
+		"addressSpace": "192.168.101.0/24",
+		"addressRange": "192.168.101.0/24",
+		"location": "southafricanorth",
+		"resourceGroup": "flkelly-zan-net-test"
+	},
+	"WESpoke1":
+	{
+		"Name": "weu-spoke-frontend",
+		"addressSpace": "192.168.201.0/24",
+		"addressRange": "192.168.201.0/24",
+		"location": "westeurope",
+		"resourceGroup": "flkelly-weu-net-test"
+	},
+	"NESpoke1":
+	{
+		"Name": "neu-spoke-frontend",
+		"addressSpace": "192.168.151.0/24",
+		"addressRange": "192.168.151.0/24",
+		"location": "northeurope",
+		"resourceGroup": "flkelly-neu-net-test"
+	},
+	"ZASpoke1VMs":
+	{
+		"location": "southafricanorth",
+		"resourceGroup": "flkelly-zan-vms-test",
+		"prefix": "zan"
+
+	},
+	"WESpoke1VMs":
+	{
+		"location": "westeurope",
+		"resourceGroup": "flkelly-weu-vms-test",
+		"prefix": "weu"
+
+	},
+	"NESpoke1VMs":
+	{
+		"location": "northeurope",
+		"resourceGroup": "flkelly-neu-vms-test",
+		"prefix": "neu"
+
+	}
+}
+ 
