@@ -3,10 +3,10 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "dnsLabelPrefix": {
-            "value": "prefix",
+            "value": "prefix"
         },
         "vmLabel": {
-            "value": "label",
+            "value": "label"
         },
         "adminPassword": {
             "value": "TestPassword@123"
