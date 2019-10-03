@@ -12,4 +12,3 @@
 terraform.tfstate
 terraform.tfstate.backup
 provider.tf
-*.sh
