@@ -1,0 +1,35 @@
+{	
+	"ManagedInstance":
+	{  
+		"name":"flkellymi",
+		"resourceGroup":"ManagedInstance1_RG",
+		"location":"northeurope"
+	},
+	"VNET":
+	{
+		"name":"myMIVnet",  
+		"addressRange":"10.0.0.0/16"
+	},
+	"Subnet1":
+	{
+		"Name": "Default",
+		"addressRange": "10.0.0.0/24"
+	},
+	"Subnet2":
+	{
+		"Name": "ManagedInstances",
+		"addressRange": "10.0.1.0/24"
+	},
+	"LoginInformation":
+	{
+		"username": "localAdmin",
+		"password": "ft@dm1nS!#3rw1~2#3"
+	},
+	"MIConfig":
+	{
+		"coreCount": "8",
+		"storageSize": "256",
+		"sku":"GP-GEN5"
+	}
+	
+}
