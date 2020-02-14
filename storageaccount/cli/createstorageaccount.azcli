@@ -1,0 +1,7 @@
+#Create STORAGE ACCOUNT
+#fill in variables below as needed
+RESOURCEGROUP=""
+STORAGEACCOUNTNAME=""
+RESOURCEGROUP=""
+LOCATION=""
+az storage account create --name $STORAGEACCOUNTNAME --resource-group $RESOURCEGROUP --location $LOCATION --sku Standard_LRS --kind StorageV2
