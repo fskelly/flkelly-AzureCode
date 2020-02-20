@@ -18,6 +18,7 @@ kubernetesVersionLatest=$(az aks get-versions -l ${REGION} --query 'orchestrator
 az ad sp create-for-rbac --name ${AKS_SPN} --output table
 AKS_APP_ID=$(az ad app list --display-name ${AKS_SPN} --query [].appId -o tsv)
 az group create --name ${RG_NAME} --location ${REGION}
+kubectl create clusterrolebinding kubernetes-dashboard -n kube-system --clusterrole=cluster-admin --serviceaccount=kube-system:kubernetes-dashboard
 az aks create --resource-group akschallenge --name ${AKS_CLUSTER}--enable-addons monitoring --kubernetes-version $kubernetesVersionLatest --generate-ssh-keys --location ${REGION} --service-principal ${AD_APP_ID} --client-secret ${SPN_PASSWORD}
 #az aks create --resource-group ${RG_NAME} --name ${AKS_CLUSTER} --enable-addons monitoring --generate-ssh-keys --location ${REGION} --kubernetes-version $kubernetesVersionLatest
 az aks install-cli 

@@ -1,0 +1,21 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "dnsLabelPrefix": {
+        "value": "vm-134"
+      },
+      "vmName": {
+        "value": "rdpVM"
+      },
+      "adminUsername": {
+        "value": "azureUser"
+      },
+      "adminPassword": {
+        "value": "0958gJGSOIUG8f@#"
+      },
+      "rdpPort": {
+        "value": 50001
+      }
+    }
+  }
