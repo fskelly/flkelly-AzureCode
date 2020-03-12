@@ -18,6 +18,8 @@ sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubun
 sudo apt-get update
 sudo apt-get install docker-ce docker-ce-cli containerd.io
 sudo service docker start
+## ENDOF INSTALL DOCKER FOR UBUNTU - not needed in cloudshell
+
 az acr login --name ${ACR_NAME}
 git clone https://github.com/Azure/azch-captureorder.git
 cd azch-captureorder
