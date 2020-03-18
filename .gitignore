@@ -18,6 +18,8 @@ provider.tf
 # .tfstate files
 *.tfstate
 *.tfstate.*
+*.plan
+*.plan.*
 
 # Crash log files
 crash.log
