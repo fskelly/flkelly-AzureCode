@@ -7,7 +7,7 @@ This is my [terraform.io](https://www.terraform.io) repository. </br>
 My [SPN](/terraform/SPN) code (creating SPNs for use with Terrafrom)
 
 1. This [script](https://github.com/fskelly/flkelly-AzureCode/blob/WIP/terraform/SPN/create_SPN_Terraform_CloudDrive.azcli) saves the SPN information to your CloudDrive on the [Azure Cloud Shell](https://shell.azure.com) </br>
-2. This [script](/terraform/SPN/create_SPN_Terraform_Keyvault.azcli) saves the SPN information to an [Azure Key Vault](https://docs.microsoft.com/en-us/azure/key-vault/)</br>
+2. This [script](terraform/SPN/create_SPN_Terraform_Keyvault.azcli) saves the SPN information to an [Azure Key Vault](https://docs.microsoft.com/en-us/azure/key-vault/)</br>
 
 My [runbook](/terraform/runbooks) code (creating azure automation runbooks)</br>
 
