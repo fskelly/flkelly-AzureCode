@@ -17,23 +17,27 @@ variable "ARM_TENANT_ID" {
 ###==========================KEYVAULT=============================================
 ###Import data variables from the KEYVAULT
 ##URI for Azure Keyvault
+## must be existing keyvault
 variable "keyvault_vault_uri" {
   description = "The prefix used for all resources in this example"
-  default = "https://xxx.vault.azure.net/"
+  default = "https://flkelly-weu-iac-tfkv.vault.azure.net/"
 }
 ## Azure Keyvaulkt name and resource group name
+## must be existing keyvault
 data "azurerm_key_vault" "kv1" {
-  name                = "xxx"
-  resource_group_name = "yyy"
+  name                = "flkelly-weu-iac-tfkv"
+  resource_group_name = "flkelly-weu-terrafrom"
 }
 ##keyvault secret properties
 data "azurerm_key_vault_secret" "myUsername" {
-  name = "username_key"
+  ##name of the key to use in KeyVault
+  name = "myUsername"
   key_vault_id = "${data.azurerm_key_vault.kv1.id}"
 }
 ##keyvault secret properties
 data "azurerm_key_vault_secret" "myPassword" {
-  name = "password_key"
+  ##name of the key to use in KeyVault
+  name = "myPassword"
   key_vault_id = "${data.azurerm_key_vault.kv1.id}"
 }
 ###======================END-KEYVAULT=============================================
@@ -42,7 +46,7 @@ data "azurerm_key_vault_secret" "myPassword" {
 ###Define required varaibles, can be overrriden as needed
 ##Add other regions as needed
 variable "locations" {
-    type = "map"
+    type = map
     default = {
         "WEU"  = "westeurope"
         "weu"  = "westeurope"
@@ -67,7 +71,7 @@ variable "location" {
 ##Pre-defined tags to be applied
 variable "tags" {
   description = "Tags that will be applied to the resources"
-  type = "map"
+  type = map
 
   default = {
     owner = "flkelly"
@@ -102,7 +106,7 @@ variable "on_prem_range" {
 ## WAN ip for VPN device "on-prem"
 variable "home_gateway_public_address" {
   description = "your public ip address of your on-prem vpn device"
-  default = "w.x.y.z" # NB you need to change this to your actual home gateway/vpn-device public address.
+  default = "1.2.3.4" # NB you need to change this to your actual home gateway/vpn-device public address.
 }
 
 variable "vm_szie" {
