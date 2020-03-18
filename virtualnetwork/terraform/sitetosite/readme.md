@@ -16,7 +16,7 @@ az ad sp create-for-rbac --role="Contributor" --scopes="/subscriptions/SUBSCRIPT
 
 Please keep the output safe, the "Password" will be only be displayed this one time and not again. You can [reset](https://docs.microsoft.com/en-us/cli/azure/ad/sp/credential?view=azure-cli-latest#az-ad-sp-credential-reset) the SPN password if needed. </br>
 
-I also have a script for the creation of the required SPN [here](www.getlink.com
+I also have other script(s) for the creation of the required SPN [here](/terraform/SPN)
 
 An example is below, please replace the required components, like the Public IP address, the "apply" will fail with the defaults within the .tf files, as these are meant to be placeholders. Many people forget to update this, so the example wth OVERRIDE the variables in [variables.tf](variables.tf) file
 
