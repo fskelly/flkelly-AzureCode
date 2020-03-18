@@ -1,0 +1,7 @@
+#provide your usbcription id below.
+SUBSCRIPTION_ID=""
+TIME=$(date +%Y%m%d-%H%M%S)
+az ad sp create-for-rbac --role="Contributor" --scopes="/subscriptions/${SUBSCRIPTION_ID}" >> /home/${USER}/clouddrive/terraform/terraform_"$TIME"_spn.txt
+
+##echo the contents of the file
+cat /home/${USER}/clouddrive/terraform/terraform_"$TIME"_spn.txt
