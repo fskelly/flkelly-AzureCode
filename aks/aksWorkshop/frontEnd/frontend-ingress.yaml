@@ -3,10 +3,10 @@ kind: Ingress
 metadata:
   name: frontend
   annotations:
-    kubernetes.io/ingress.class: addon-http-application-routing
+    kubernetes.io/ingress.class: nginx
 spec:
   rules:
-  - host: frontend.4761381d08dd47d492ba.westeurope.aksapp.io
+  - host: frontend.51.105.204.121.nip.io
     http:
       paths:
       - backend:

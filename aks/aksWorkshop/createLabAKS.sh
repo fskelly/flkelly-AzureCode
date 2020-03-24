@@ -21,9 +21,15 @@ SPN_PWD=$(echo "${SPN}" | jq -c '.password')
 SPN_PWD=$(echo ${SPN_PWD%?} | cut -c2-)
 
 az group create --name ${RG_NAME} --location ${REGION}
+#Please pick one, NOT BOTH autoscaler OR no autoscaler
+#no autoscaler - 
 az aks create --resource-group ${RG_NAME} --name ${AKS_CLUSTER} --enable-addons monitoring --kubernetes-version $kubernetesVersionLatest --generate-ssh-keys --location ${REGION} --service-principal ${AKS_APP_ID} --client-secret ${SPN_PWD}
+#autoscaler
+az aks create --resource-group ${RG_NAME} --name ${AKS_CLUSTER} --location ${REGION} --kubernetes-version $kubernetesVersionLatest --generate-ssh-keys --vm-set-type VirtualMachineScaleSets --enable-cluster-autoscaler --min-count 1 --max-count 3 --service-principal ${AKS_APP_ID} --client-secret ${SPN_PWD} --enable-monitoring
+
 
 az aks install-cli 
 az aks get-credentials --resource-group ${RG_NAME} --name ${AKS_CLUSTER}
 kubectl create clusterrolebinding kubernetes-dashboard -n kube-system --clusterrole=cluster-admin --serviceaccount=kube-system:kubernetes-dashboard
 kubectl get nodes
+az aks browse --resource-group ${RG_NAME} --name ${AKS_CLUSTER}

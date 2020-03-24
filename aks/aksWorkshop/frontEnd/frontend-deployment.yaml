@@ -33,6 +33,6 @@ spec:
               cpu: "500m"
           env:
           - name: CAPTUREORDERSERVICEIP
-            value: "52.232.34.103"
+            value: "40.114.172.125"
           ports:
           - containerPort: 8080
