@@ -6,7 +6,7 @@ I am currently a **Microsoft Employee**, this is just my personal repository of 
 
 - [az cli](https://docs.microsoft.com/en-us/cli/azure/?view=azure-cli-latest)
 
-- [PowerShell](https://github.com/fskelly/flkelly-AzureCode-powershell)
+- [PowerShell](https://docs.microsoft.com/en-us/powershell/azure/install-az-ps?view=azps-4.3.0)
 
 - [python](https://docs.microsoft.com/en-us/python/azure/?view=azure-python)
 
@@ -14,9 +14,8 @@ I am currently a **Microsoft Employee**, this is just my personal repository of 
 
 - [Terrafrom](https://www.terraform.io)
 
-- [REST API](https://docs.microsoft.com/en-us/rest/api/azure/)</br>
-</br>
-
+- [REST API](https://docs.microsoft.com/en-us/rest/api/azure/)  
+  
 *All round geek; Azure Cloud Advocate; PowerShell Scripter; #! Bash Junkee; FastTrack for Azure; Microsoft South Africa Employee; Tinkerer - #arduino, #ESP, #VSCode, #RPI #**automatetheworld**
 
 ## How this repo works
@@ -25,7 +24,8 @@ This will become a landing page for my other repos, the folder structure was bec
 
 ### Repo Links
 
-[My PowerShell Repo](https://github.com/fskelly/flkelly-AzureCode-powershell)
+[My PowerShell Repo](https://github.com/fskelly/flkelly-AzureCode-powershell)  
+[My CLI Repo](https://github.com/fskelly/flkelly-AzureCode-cl)
 
 **DISCLAIMER:**
 This code must be tested before use and modified or rechecked as per your company / business / personal standards.
