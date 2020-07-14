@@ -25,7 +25,7 @@ This will become a landing page for my other repos, the folder structure was bec
 ### Repo Links
 
 [My PowerShell Repo](https://github.com/fskelly/flkelly-AzureCode-powershell)  
-[My CLI Repo](https://github.com/fskelly/flkelly-AzureCode-cl)
+[My CLI Repo](https://github.com/fskelly/flkelly-AzureCode-cli)
 
 **DISCLAIMER:**
 This code must be tested before use and modified or rechecked as per your company / business / personal standards.
