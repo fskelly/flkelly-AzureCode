@@ -24,13 +24,15 @@ This will become a landing page for my other repos, the folder structure was bec
 
 ### Repo Links
 
-[My PowerShell Repo](https://github.com/fskelly/flkelly-AzureCode-powershell)  
-[My CLI Repo](https://github.com/fskelly/flkelly-AzureCode-cli)
+[My Azure PowerShell Repo](https://github.com/fskelly/flkelly-AzureCode-powershell)  
+[My Azure CLI Repo](https://github.com/fskelly/flkelly-AzureCode-cli)  
+[My Azure Resource Manager (ARM) Repo](https://github.com/fskelly/flkelly-AzureCode-arm)
+[My Terraform Repo](https://github.com/fskelly/flkelly-AzureCode-terraform)  
 
 **DISCLAIMER:**
 This code must be tested before use and modified or rechecked as per your company / business / personal standards.
 
 You can find me on
-[Twitter](https://www.twitter.com/fskelly) or [LinkedIn](https://www.linkedin.com/in/fletcherkelly) </br>
+[Twitter](https://www.twitter.com/fskelly) or [LinkedIn](https://www.linkedin.com/in/fletcherkelly)  
 
-![Twitter_Picture](https://res.cloudinary.com/fskelly/image/twitter_name/w_100/fskelly.jpg) </br>
+![Twitter_Picture](https://res.cloudinary.com/fskelly/image/twitter_name/w_100/fskelly.jpg)  
