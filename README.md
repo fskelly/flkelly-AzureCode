@@ -26,7 +26,7 @@ This will become a landing page for my other repos, the folder structure was bec
 
 [My Azure PowerShell Repo](https://github.com/fskelly/flkelly-AzureCode-powershell)  
 [My Azure CLI Repo](https://github.com/fskelly/flkelly-AzureCode-cli)  
-[My Azure Resource Manager (ARM) Repo](https://github.com/fskelly/flkelly-AzureCode-arm)
+[My Azure Resource Manager (ARM) Repo](https://github.com/fskelly/flkelly-AzureCode-arm)  
 [My Terraform Repo](https://github.com/fskelly/flkelly-AzureCode-terraform)  
 
 **DISCLAIMER:**
