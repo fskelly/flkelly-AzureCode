@@ -1,0 +1,30 @@
+az login
+
+# update values below as needed
+SUB_ID=""
+REGION=""
+RG_NAME=""
+AKS_CLUSTER=""
+AKS_SPN=""
+AD_APP_NAME=""
+SPN_PASSWORD=""
+
+az account set --subscription ${SUB_ID}
+az group create --name ${RG_NAME} --location ${REGION}
+
+# create an Azure AD app
+az ad app create --display-name ${AD_APP_NAME} --homepage "http://localhost/${AD_APP_NAME}" --identifier-uris [http://localhost/${AD_APP_NAME}](http://localhost/${AD_APP_NAME})
+az ad sp create-for-rbac --name ${AD_APP_NAME} --password ${SPN_PASSWORD}
+AD_APP_ID=$(az ad app list --display-name ${AD_APP_NAME} --query [].appId -o tsv)
+
+az aks get-versions -l ${REGION} -o table
+kubernetesVersionLatest=$(az aks get-versions -l ${REGION} --query 'orchestrators[-1].orchestratorVersion' -o tsv)
+az aks create --resource-group ${RG_NAME} --name ${AKS_CLUSTER} --enable-addons monitoring --kubernetes-version ${kubernetesVersionLatest} --generate-ssh-keys --location ${REGION} --service-principal ${AD_APP_ID} --client-secret ${SPN_PASSWORD}
+az aks install-cli 
+az aks get-credentials --resource-group ${RG_NAME} --name ${AKS_CLUSTER}
+kubectl get nodes
+kubectl create clusterrolebinding kubernetes-dashboard -n kube-system --clusterrole=cluster-admin --serviceaccount=kube-system:kubernetes-dashboard
+kubectl create serviceaccount --namespace kube-system tiller
+kubectl create clusterrolebinding tiller-cluster-rule --clusterrole=cluster-admin --serviceaccount=kube-system:tiller
+kubectl patch deploy --namespace kube-system tiller-deploy -p '{"spec":{"template":{"spec":{"serviceAccount":"tiller"}}}}'
+az aks browse --resource-group ${RG_NAME} --name ${AKS_CLUSTER}
