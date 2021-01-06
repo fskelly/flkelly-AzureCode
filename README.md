@@ -34,5 +34,3 @@ This code must be tested before use and modified or rechecked as per your compan
 
 You can find me on
 [Twitter](https://www.twitter.com/fskelly) or [LinkedIn](https://www.linkedin.com/in/fletcherkelly)  
-
-![Twitter_Picture](https://res.cloudinary.com/fskelly/image/twitter_name/w_100/fskelly.jpg)  
